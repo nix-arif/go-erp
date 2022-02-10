@@ -45,7 +45,7 @@ sudo apt -y install mariadb-server libmysqlclient-dev
 ```
 
 - You will prompt to enter root password to MariaDB.
-  <img src="./MariaDB_password_prompt" alt="MariaDB_password_prompt"/>
+  <img src="./MariaDB_password_prompt.png" alt="MariaDB_password_prompt"/>
 
 - The Barracuda storage engine is required for creation of ERPNext databases, so configure MariaDB to use Barracuda storage engine. Edit the default MariaDB configuration file `my.cnf`
 
