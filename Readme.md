@@ -107,3 +107,135 @@ sudo mysql_secure_installation
 6. Reload privilege tables - Y
 
 ## Install Nginx, Node.js and Redis
+
+- Add the Nodesource repository for Node.js 12.x.
+
+```
+sudo curl --silent --location https://deb.nodesource.com/setup_12.x | sudo bash -
+```
+
+- Install and update yarn with below 3 command
+
+```
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+```
+
+```
+echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+```
+
+```
+sudo apt-get update && sudo apt-get install yarn
+```
+
+- Check whether apache is exist or not.
+
+```
+sudo apt purge apache2
+```
+
+- If exist, please uninstall first
+- Install, Nginx, nodejs, redis and supervisor
+
+```
+sudo apt -y install nginx nodejs redis-server supervisor
+```
+
+- After installation complete, enable the nginx
+
+```
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+- Start and enable Redis
+
+```
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+```
+
+## Install PDF Converter
+
+- The `wkhtmltopdf` converts HTML to PDF
+
+```
+sudo apt -y install libxrender1 libxext6 xfonts-75dpi xfonts-base
+```
+
+- Then download the latest `wkhtmltopdf` downloader from https://wkhtmltopdf.org/downloads.html
+- Go to Ubuntu 20.04(focal) amd64 and copy link address (https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb)
+
+```
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb
+```
+
+- Install with sudo
+
+```
+sudo dpkg -i wkhtmltox_0.12.6-1.focal_amd64.deb
+```
+
+- If error happens, run below command first. This will install missing depedencies. After that run the installation command again.
+
+```
+sudo apt-get -f install
+```
+
+- Run below command to ensure `wkhtmltopdf` successfully installed
+
+```
+wkhtmltopdf --version
+```
+
+- Run below command to install neccessary package
+
+```
+sudo apt-get git curl nano pv
+```
+
+- Go to mysql to ensure database successfully install
+
+```
+mysql -u root -p
+```
+
+## Add User
+
+- Add new user rather than login as root
+
+```
+sudo adduser frappe
+```
+
+- Add sudo to the user
+
+```
+sudo usermod -aG sudo frappe
+```
+
+- Switch the user
+
+```
+sudo su - frappe
+```
+
+## Install Bench
+
+- Install frappe bench
+
+```
+sudo pip3 install frappe-bench
+```
+
+- To test it is installed
+
+```
+bench
+```
+
+- Initialize the project
+
+```
+bench init --frappe-branch=version-13-beta frappe-bench --python=python3.7
+```
