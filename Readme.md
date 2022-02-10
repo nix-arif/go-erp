@@ -46,3 +46,47 @@ sudo apt -y install mariadb-server libmysqlclient-dev
 
 - You will prompt to enter root password to MariaDB.
   <img src="./MariaDB_password_prompt" alt="MariaDB_password_prompt"/>
+
+- The Barracuda storage engine is required for creation of ERPNext databases, so configure MariaDB to use Barracuda storage engine. Edit the default MariaDB configuration file `my.cnf`
+
+```
+sudo nano /etc/mysql/my.cnf
+```
+
+- Insert following line under `[mysqld]` line.
+
+```
+innodb-file-format=barracuda
+innodb-file-per-table=1
+innodb-large-prefix=1
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+```
+
+- Insert following line under `[mysql]` line.
+
+```
+default-character-set = utf8mb4
+```
+
+//////////////////////////////////////////////////////////
+This line still not done
+
+- Under `[mysqldump]` change `max_allowed_packet` to `64M`
+- Under `[isamchk]` change `key_buffer` to `64M`
+  //////////////////////////////////////////////////////////
+
+- Edit `innodb_buffer_pool_size` from `256M` to `2000M`
+- Restart MariaDB
+
+```
+sudo systemctl restart mariadb
+sudo systemctl enable mariadb
+```
+
+- Test the server by typing below command. If problem, some error shows up
+
+```
+sudo systemctl mysql restart
+```
