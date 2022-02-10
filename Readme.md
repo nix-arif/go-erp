@@ -90,3 +90,18 @@ sudo systemctl enable mariadb
 ```
 sudo systemctl mysql restart
 ```
+
+- Before configuring the databse, we need to secure MariaDB. Use below command to secure it.
+
+```
+sudo mysql_secure_installation
+```
+
+- Running the above command you will be prompted will several question.
+
+1. Enter the root password
+2. Change the root password - n (only y if you want)
+3. Remove anonymous users - n
+4. Dissallow root login remotely - Y
+5. Remove test database - n
+6. Reload privilege tables - Y
