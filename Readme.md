@@ -105,3 +105,5 @@ sudo mysql_secure_installation
 4. Dissallow root login remotely - Y
 5. Remove test database - n
 6. Reload privilege tables - Y
+
+## Install Nginx, Node.js and Redis
